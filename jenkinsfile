@@ -23,6 +23,8 @@ pipeline {
            withDockerServer([uri: 'tcp://10.128.0.21:2376']) {
            docker ps
          }
+
    }
+}
 }
 }
