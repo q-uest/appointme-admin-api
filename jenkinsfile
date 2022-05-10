@@ -20,7 +20,7 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-            sh "sudo docker run hello-world"         
+            sh "id;hostname;"         
             }
 
    }
