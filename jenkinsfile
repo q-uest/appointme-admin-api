@@ -20,7 +20,7 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-            sh "sudo docker build -t ."         
+            sh "sudo docker build -t oshokumar:appointme-admin-api ."         
             }
 
    }
