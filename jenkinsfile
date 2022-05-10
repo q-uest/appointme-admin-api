@@ -20,7 +20,7 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-            sh "docker -H ssh://root@10.128.0.23 run hello-world"         
+            sh "docker run hello-world"         
             }
 
    }
