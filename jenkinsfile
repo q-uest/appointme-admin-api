@@ -25,7 +25,7 @@ pipeline {
       steps {
             sh '''
                 sudo docker build -t oshokumar/appointme-admin-api:latest .
-                echo $DOCKERHUB_CREDENTIALS | docker login -u oshokumar --password-stdin'
+                echo $DOCKERHUB_CREDENTIALS | docker login -u oshokumar --password-stdin
                 docker push oshokumar/appointme-admin-api:latest
                 
                 '''
