@@ -1,5 +1,8 @@
 pipeline {
   agent any 
+  environment {
+		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
+	}
     stages {
       stage('SonarQube analysis') {
         environment{
@@ -20,7 +23,13 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-            sh "sudo docker build -t oshokumar:appointme-admin-api ."         
+            sh '''
+                sudo docker build -t oshokumar/appointme-admin-api:latest .
+                echo $DOCKERHUB_CREDENTIALS | docker login -u oshokumar --password-stdin'
+                docker push oshokumar/appointme-admin-api:latest
+                
+                '''
+		
             }
 
    }
