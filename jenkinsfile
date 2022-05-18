@@ -35,6 +35,15 @@ pipeline {
             }
 
    }
-}
+   
+   stage("Trivy Docker scan") 
+   {
+            steps {
+              sh "sudo trivy image oshokumar/appointme-admin-api:latest"
+ 
+                  }
+    }
+
+ }
 }
 
