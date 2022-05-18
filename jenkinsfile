@@ -23,10 +23,10 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-      withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'pass', usernameVariable: 'user')]) {
+      withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USER')]) {
             sh '''
                 sudo docker build -t oshokumar/appointme-admin-api:latest .
-                sudo docker login -u ${user} -p ${pass}
+                sudo docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
                 sudo docker push oshokumar/appointme-admin-api:latest
                 
                 '''
