@@ -23,10 +23,11 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-      withCredentials([usernamePassword(credentialsId: 'ram-dockerhub-login', variable: 'token')]) {
-            sh '''
+      withCredentials([string(credentialsId: 'ram-dockerhub-login', variable: 'TOKEN')]) {
+      
+              sh '''
                 sudo docker build -t oshokumar/appointme-admin-api:latest .
-                sudo docker login -u oshokumar -p token
+                sudo docker login -u oshokumar -p ${TOKEN}
                 sudo docker push oshokumar/appointme-admin-api:latest
                 
                 '''
