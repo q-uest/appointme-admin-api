@@ -23,7 +23,7 @@ pipeline {
           }
       stage("Create Docker image") {
       steps {
-      withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USER')]) {
+      withCredentials([usernamePassword(credentialsId: 'ram-dockerhub-login', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USER')]) {
             sh '''
                 sudo docker build -t oshokumar/appointme-admin-api:latest .
                 sudo docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
