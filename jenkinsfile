@@ -30,7 +30,7 @@ pipeline {
               sh '''
                 sudo docker build -t ${DOCK_IMG_NAME} .
                 sudo docker login -u ${username} -p ${pass} 35.232.16.59:8082
-                sudo docker push 35.232.16.59:8082/appointme-admin-api:${BUILD_NUMBER} 
+                sudo docker push ${DOCK_IMG_NAME}
                 
                 '''
 		}
@@ -42,10 +42,10 @@ pipeline {
    {
             steps {
               sh '''
-	      TH=`sudo trivy image 35.232.16.59:8082/appointme-admin-api:${BUILD_NUMBER} |sed -n '8,8p'|cut -d ":" -f7|cut -d ")" -f1`
+	      TH=`sudo trivy image ${DOCK_IMG_NAME} |sed -n '8,8p'|cut -d ":" -f7|cut -d ")" -f1`
 	      if [ $TH -gt 100 ]
 	      then   
-	         echo "Crossed the Critical Threshold Limit of "${TRIVY_CRITICAL_THRES}
+	         echo "FAILED:Crossed the Critical Threshold Limit of "${TRIVY_CRITICAL_THRES} !!!!!
 		 exit 1
 	      fi
 	      
