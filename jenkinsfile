@@ -2,7 +2,7 @@ pipeline {
   agent any 
   environment {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
-		TRIVY_CRITICAL_THRES=100
+		TRIVY_CRITICAL_THRES=200
 		DOCK_IMG_NAME="35.232.16.59:8082/appointme-admin-api:${BUILD_NUMBER}"
 	}
     stages {
