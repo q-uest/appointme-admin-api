@@ -43,7 +43,7 @@ pipeline {
             steps {
               sh '''
 	      TH=`sudo trivy image ${DOCK_IMG_NAME} |sed -n '8,8p'|cut -d ":" -f7|cut -d ")" -f1`
-	      if [ $TH -gt 100 ]
+	      if [ $TH -gt ${TRIVY_CRITICAL_THRES} ]
 	      then   
 	         echo "FAILED:Crossed the Critical Threshold Limit of "${TRIVY_CRITICAL_THRES} !!!!!
 		 exit 1
