@@ -48,6 +48,8 @@ pipeline {
 	         echo "Crossed the Critical Threshold Limit of "${TRIVY_CRITICAL_THRES}
 		 exit 1
 	      fi
+	      
+	      '''
  
                   }
     }
