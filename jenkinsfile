@@ -28,7 +28,7 @@ pipeline {
       withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'pass', usernameVariable: 'username')]) {
       
               sh '''
-                sudo docker build -t 35.232.16.59:8082/appointme-admin-api:${BUILD_NUMBER} .
+                sudo docker build -t ${DOCK_IMG_NAME} .
                 sudo docker login -u ${username} -p ${pass} 35.232.16.59:8082
                 sudo docker push 35.232.16.59:8082/appointme-admin-api:${BUILD_NUMBER} 
                 
