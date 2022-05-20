@@ -59,7 +59,7 @@ pipeline {
        steps {
        
        sh '''
-       git rev-parse --abbrev-ref HEAD
+       echo ${BRANCH_NAME}
        
        '''
        
