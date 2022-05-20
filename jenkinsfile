@@ -58,10 +58,9 @@ pipeline {
     {
        steps {
        
-       sh '''
-       echo ${env.BRANCH_NAME}
+              echo BRANCH_NAME=${BRANCH_NAME}
        
-       '''
+      
        
        
        }
