@@ -3,7 +3,7 @@ pipeline {
   environment {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
 		TRIVY_CRITICAL_THRES=200
-		DOCK_IMG_NAME="35.232.16.59:8081/appointme-admin-api:${BUILD_NUMBER}"
+		DOCK_IMG_NAME="35.232.16.59:8082/appointme-admin-api:${BUILD_NUMBER}"
 	}
     stages {
       stage('SonarQube analysis') {
@@ -29,7 +29,7 @@ pipeline {
       
               sh '''
                 sudo docker build -t ${DOCK_IMG_NAME} .
-                sudo docker login -u ${username} -p ${pass} 35.232.16.59:8081
+                sudo docker login -u ${username} -p ${pass} 35.232.16.59:8082
                 sudo docker push ${DOCK_IMG_NAME}
                 
                 '''
