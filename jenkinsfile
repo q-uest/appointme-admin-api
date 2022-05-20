@@ -58,10 +58,7 @@ pipeline {
     {
        steps {
        
-              echo "BRANCH_NAME=${BRANCH_NAME}"
-       
-      
-       
+               echo "The build number is ${BRANCH_NAME}"
        
        }
     }
