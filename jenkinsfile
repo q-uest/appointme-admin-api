@@ -53,6 +53,20 @@ pipeline {
  
                   }
     }
+    
+    stage("Deploy the application")
+    {
+       steps {
+       
+       sh '''
+       git rev-parse --abbrev-ref HEAD
+       
+       '''
+       
+       
+       }
+    }
+    
 
  }
 }
