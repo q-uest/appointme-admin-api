@@ -54,16 +54,17 @@ pipeline {
                   }
     }
     
-    stage("Deploy the application")
-    {
-       steps {
-       
-               echo "The build number is ${BRANCH_NAME}"
-       
+    stage('Deploy Application') {
+      when {
+                expression {
+                    env.GIT_BRANCH.contains("main")
+                           }
+            }
+      steps { 
+            echo "Deploy the Application....The GIT BRANCH="+ env.GIT_BRANCH
+            }
        }
-    }
     
-
  }
 }
 
