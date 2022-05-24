@@ -4,7 +4,7 @@ pipeline {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
 		TRIVY_CRITICAL_THRES=200
 		DOCK_IMG_NAME="34.136.48.223:8082/appointme-admin-api:${BUILD_NUMBER}"
-		MY_KUBECONFIG=credentials('kubernetes-ram')
+		
 	      }
     stages {
       stage('SonarQube analysis') {
@@ -64,8 +64,12 @@ pipeline {
             }
       steps { 
                 
-	      sh("kubectl --kubeconfig $MY_KUBECONFIG get pods")
-              
+	      withCredentials([kubeconfigContent(credentialsId: 'kubernetes-ram', variable: 'KUBECONFIG_CONTENT')]) 
+	      {
+	        sh '''
+	        kubectl get node
+	        '''
+	      }
            }
      }
  }
