@@ -63,7 +63,7 @@ pipeline {
             }
       steps { 
       
-              withCredentials([string(credentialsId: 'kubernetes-ram')]) 
+              withCredentials([string(credentialsId: 'kubernetes-ram', variable: 'USERPASS'))]) 
 	      {
 	        echo "Deploy the Application....The GIT BRANCH="+ env.GIT_BRANCH
 	        sh '''
