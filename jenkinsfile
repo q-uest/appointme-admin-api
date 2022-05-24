@@ -4,7 +4,7 @@ pipeline {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
 		TRIVY_CRITICAL_THRES=200
 		DOCK_IMG_NAME="34.136.48.223:8082/appointme-admin-api:${BUILD_NUMBER}"
-	}
+	      }
     stages {
       stage('SonarQube analysis') {
         environment{
@@ -54,17 +54,23 @@ pipeline {
                   }
     }
     
-    stage('Deploy Application') {
+    stage('Deploy Application') 
+    {
       when {
                 expression {
                     env.GIT_BRANCH.contains("main")
                            }
             }
       steps { 
-            echo "Deploy the Application....The GIT BRANCH="+ env.GIT_BRANCH
-            }
-       }
-    
+      
+              withCredentials([string(credentialsId: 'kubernetes-ram')]) 
+	      {
+	        echo "Deploy the Application....The GIT BRANCH="+ env.GIT_BRANCH
+	        sh '''
+	        kubectl get node
+	        '''
+              }
+           }
+     }
  }
 }
-
