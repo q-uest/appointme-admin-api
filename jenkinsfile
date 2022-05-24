@@ -64,10 +64,11 @@ pipeline {
             }
       steps { 
                 
-	      withCredentials([kubeconfigContent(credentialsId: 'kubernetes-ram', variable: 'KUBECONFIG_CONTENT')]) 
+	      /* withCredentials([kubeconfigContent(credentialsId: 'kubernetes-ram', variable: 'KUBECONFIG_CONTENT')])  */
+	      withCredentials([file(credentialsId: 'kubernetes-ram', variable: 'config')]) {
 	      {
 	        sh '''
-		export KUBECONFIG=\$KUBECONFIG_CONTENT
+		export KUBECONFIG=\$config
 	        kubectl get node
 	        '''
 	      }
