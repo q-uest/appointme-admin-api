@@ -67,11 +67,9 @@ pipeline {
 	      /* withCredentials([kubeconfigContent(credentialsId: 'kubernetes-ram', variable: 'KUBECONFIG_CONTENT')])  */
 	      withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) 
 	      {
-	        sh '''
-		    kubectl get node
-	        '''
-	      }
-           }
+	        sh 'hostname;'
+              }
+            }
      }
  }
 }
