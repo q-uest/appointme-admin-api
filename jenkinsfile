@@ -67,6 +67,7 @@ pipeline {
 	      withCredentials([kubeconfigContent(credentialsId: 'kubernetes-ram', variable: 'KUBECONFIG_CONTENT')]) 
 	      {
 	        sh '''
+		export KUBECONFIG=\$KUBECONFIG_CONTENT
 	        kubectl get node
 	        '''
 	      }
