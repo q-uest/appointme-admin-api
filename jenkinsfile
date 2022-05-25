@@ -69,6 +69,7 @@ pipeline {
 	      withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) 
 	      {
 	        sh '''
+		datree config set token ad6dfafb-9ff1-44c5-a175-8bba5e1d16a7
 		helm datree test helm
 		helm upgrade --install --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" appoint-admin-api helm/'
 		'''
