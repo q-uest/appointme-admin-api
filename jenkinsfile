@@ -3,7 +3,7 @@ pipeline {
   environment {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
 		TRIVY_CRITICAL_THRES=200
-		DOCK_IMG_NAME="34.136.48.223:8082/appointme-admin-api:${BUILD_NUMBER}"
+		DOCK_IMG_NAME="35.202.196.238/appointme-admin-api:${BUILD_NUMBER}"
 		date_format = new Date().format('dd-MM-yy-HHmm')
 		
 	      }
