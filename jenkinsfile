@@ -45,6 +45,7 @@ pipeline {
    {
             steps {
               sh '''
+	      sudo trivy image ${DOCK_IMG_NAME} |sed -n '8,8p'
 	      TH=`sudo trivy image ${DOCK_IMG_NAME} |sed -n '8,8p'|cut -d ":" -f7|cut -d ")" -f1`
 	      if [ -z "${TH}" ] || [ $TH -gt ${TRIVY_CRITICAL_THRES} ]
 	      then   
