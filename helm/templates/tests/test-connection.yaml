@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: busybox:latest
       command: ['wget']
       args: ['{{ include "admin-api.fullname" . }}:{{ .Values.service.port }}']
       resources:
