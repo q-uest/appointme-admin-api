@@ -75,7 +75,7 @@ pipeline {
 		helm template  --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" appoint-admin-api ./helm > ./helm/script.yaml 
 		helm datree test helm -- --values ./helm/values.yaml  --set image.repository=${DOCK_IMG_NAME}
 		
-		helm upgrade --install --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" appoint-admin-api helm/'
+		helm upgrade --install --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" appoint-admin-api helm/
 		'''
               }
             }
