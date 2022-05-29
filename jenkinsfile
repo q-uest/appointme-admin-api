@@ -3,8 +3,8 @@ pipeline {
   environment {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
 		TRIVY_CRITICAL_THRES=200
-		DOCK_IMG_NAME="35.202.196.238/appointme-admin-api:${BUILD_NUMBER}"
-		NGINX_PROXY_URL="35.202.196.238"
+		DOCK_IMG_NAME="34.67.194.116/appointme-admin-api:${BUILD_NUMBER}"
+		NGINX_PROXY_URL="34.67.194.116"
 		date_format = new Date().format('dd-MM-yy-HHmm')
 		
 	      }
