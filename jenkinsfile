@@ -34,7 +34,7 @@ pipeline {
 		IS_DEP_FAILED=$?
 		
 		
-		if [ ${IS_DEP_FAILED} -ne 0 ]
+		if [ ${IS_DEP_FAILED} -eq 0 ]
 		then
 		  ROLLBACK_TO=`helm --kubeconfig /opt/kubeconfig history ${HELM_REL_NAME}|grep -i "deployed"|tail -1|cut -f1`   
 		  echo "The Deployment has failed...Rolling back to the last successful Revision:"${ROLLBACK_TO}
