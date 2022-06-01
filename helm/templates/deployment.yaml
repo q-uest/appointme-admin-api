@@ -40,15 +40,13 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
-            exec:
-              command:
-              - cat
-              - /dev/null
+            httpGet:
+              path: /api/appointment
+              port: http
           readinessProbe:
-            exec:
-              command:
-              - cat
-              - /dev/null
+            httpGet:
+              path: /api/appointment
+              port: http
       imagePullSecrets:
         - name: regcred
       {{- with .Values.nodeSelector }}
