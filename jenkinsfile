@@ -3,61 +3,14 @@ pipeline {
   environment {
 		DOCKERHUB_CREDENTIALS=credentials('ram-dockerhub-login')
 		TRIVY_CRITICAL_THRES=200
-		DOCK_IMG_NAME="34.67.194.116/appointme-admin-api:${BUILD_NUMBER}"
+		DOCK_IMG_NAME="34.67.194.116/appointme-admin-api:ram-new"
 		NGINX_PROXY_URL="34.67.194.116"
 		date_format = new Date().format('dd-MM-yy-HHmm')
+		HELM_REL_NAME=appoint-admin-api
+		HELM_DEP_TIMEOUT=300
 		
 	      }
     stages {
-      stage('SonarQube analysis') {
-        environment{
-               scannerHome = tool 'sonar-scanner'
-          }
-        steps { 
-          withSonarQubeEnv('sonarqube') {
-            sh "${scannerHome}/bin/sonar-scanner"     
-           }
-        }
-     } 
-      stage("Quality Gate") {
-            steps {
-              timeout(time: 10, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
-      stage("Create Docker image") {
-      steps {
-      withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'pass', usernameVariable: 'username')]) {
-      
-              sh '''
-                sudo docker build -t ${DOCK_IMG_NAME} .
-                sudo docker login -u ${username} -p ${pass} ${NGINX_PROXY_URL}
-                sudo docker push ${DOCK_IMG_NAME}
-                
-                '''
-		}
-            }
-
-   }
-   
-   stage("Trivy Docker scan") 
-   {
-            steps {
-              sh '''
-	      sudo trivy image ${DOCK_IMG_NAME} |sed -n '8,8p'
-	      TH=`sudo trivy image ${DOCK_IMG_NAME} |sed -n '8,8p'|cut -d ":" -f7|cut -d ")" -f1`
-	      if [ -z "${TH}" ] || [ $TH -gt ${TRIVY_CRITICAL_THRES} ]
-	      then   
-	         echo "FAILED:Critical: "${TH} " has Crossed the Critical Threshold Limit of "${TRIVY_CRITICAL_THRES} !!!!!
-		 exit 1
-	      fi
-	      
-	      '''
- 
-                  }
-    }
-    
     stage('Deploy Application') 
     {
       when {
@@ -75,7 +28,11 @@ pipeline {
 		helm template  --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" appoint-admin-api ./helm > ./helm/script.yaml 
 		#helm datree test helm -- --values ./helm/values.yaml  --set image.repository=${DOCK_IMG_NAME}
 		
-		helm upgrade --install --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" appoint-admin-api helm/
+		helm upgrade --install --wait --timeout ${HELM_DEP_TIMEOUT} --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" ${HELM_REL_NAME} helm/
+		
+		curl localhost:30050 2>/dev/null|grep "<title>Error</title>" 
+		rc=$?
+		if 
 		'''
               }
             }
