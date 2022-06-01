@@ -30,9 +30,6 @@ pipeline {
 		
 		helm upgrade --install --wait --timeout ${HELM_DEP_TIMEOUT}s --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" ${HELM_REL_NAME} helm/
 		
-		curl localhost:30050 2>/dev/null|grep "<title>Error</title>" 
-		rc=$?
-		if 
 		'''
               }
             }
