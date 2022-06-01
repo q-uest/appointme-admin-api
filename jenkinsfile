@@ -6,7 +6,7 @@ pipeline {
 		DOCK_IMG_NAME="34.67.194.116/appointme-admin-api:ram-new"
 		NGINX_PROXY_URL="34.67.194.116"
 		date_format = new Date().format('dd-MM-yy-HHmm')
-		HELM_REL_NAME=appoint-admin-api
+		HELM_REL_NAME="appoint-admin-api"
 		HELM_DEP_TIMEOUT=300
 		
 	      }
