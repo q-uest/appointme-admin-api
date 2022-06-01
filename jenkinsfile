@@ -30,6 +30,16 @@ pipeline {
 		
 		helm upgrade --install --wait --timeout ${HELM_DEP_TIMEOUT}s --set image.repository=${DOCK_IMG_NAME} --set image.tag="${date_format}" ${HELM_REL_NAME} helm/
 		
+		helm --kubeconfig /opt/kubeconfig history ${HELM_REL_NAME}|tail -1|grep -i "failed" 
+		IS_DEP_FAILED=$?
+		
+		
+		if [ ${IS_DEP_FAILED} -ne 0 ]
+		then
+		  ROLLBACK_TO=`helm --kubeconfig /opt/kubeconfig history ${HELM_REL_NAME}|grep -i "deployed"|tail -1|cut -f1`   
+		  echo "The Deployment has failed...Rolling back to the last successful Revision:"${ROLLBACK_TO}
+		  helm rollback --wait --timeout ${HELM_DEP_TIMEOUT}s ${HELM_REL_NAME} ${ROLLBACK_TO}
+		fi
 		'''
               }
             }
