@@ -41,11 +41,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /api/appointmen
+              path: /api/appointment
               port: http
           readinessProbe:
             httpGet:
-              path: /api/appointmen
+              path: /api/appointment
               port: http
       imagePullSecrets:
         - name: regcred
